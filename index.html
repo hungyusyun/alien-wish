@@ -4,746 +4,375 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="鹿港老街的外星人療癒站。買雞蛋糕，送祈願卡、刀療體驗與易經問答。週六日 10:00–17:00。">
-<meta property="og:title" content="外星人祈願雞蛋糕 — 鹿港老街">
-<meta property="og:description" content="你的願望，宇宙聽到了。在媽祖守護的老街口，用一把刀、一張卦，幫你找到方向。">
-<meta property="og:type" content="website">
 <title>外星人祈願雞蛋糕 — 鹿港老街療癒站</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
-/* ─── TOKENS ─────────────────────────────────────────────── */
 :root {
-  --bg:        #0B0913;
-  --bg-2:      #110E1D;
-  --bg-card:   rgba(255,255,255,0.04);
-  --border:    rgba(212,160,32,0.18);
-  --border-hi: rgba(212,160,32,0.45);
+  --bg:#0B0913; --bg-2:#110E1D; --bg-card:rgba(255,255,255,0.04);
+  --border:rgba(212,160,32,0.18); --border-hi:rgba(212,160,32,0.45);
+  --gold:#D4A020; --gold-lt:#F0C84A; --gold-dk:#9A7010;
+  --red:#C94838; --teal:#2AADA0;
+  --text:#F0E8D4; --text-2:#B8A898; --text-3:#7A6E62;
+  --serif:'Noto Serif TC','Georgia',serif;
+  --sans:'Noto Sans TC','PingFang TC',sans-serif;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;overflow-x:hidden;}
+img{max-width:100%;}
+a{color:inherit;text-decoration:none;}
 
-  --gold:      #D4A020;
-  --gold-lt:   #F0C84A;
-  --gold-dk:   #9A7010;
-  --red:       #C94838;
-  --red-lt:    #E8705E;
-  --teal:      #2AADA0;
+.stars-wrap{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;border-radius:50%;background:#fff;opacity:0;animation:twinkle var(--dur,4s) var(--delay,0s) infinite ease-in-out;}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(0.6);}50%{opacity:var(--op,0.6);transform:scale(1);}}
 
-  --text:      #F0E8D4;
-  --text-2:    #B8A898;
-  --text-3:    #7A6E62;
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(11,9,19,0.85);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);}
+.nav-logo{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--gold);letter-spacing:0.06em;}
+.nav-links{display:flex;gap:1.75rem;}
+.nav-links a{font-size:13px;color:var(--text-2);letter-spacing:0.03em;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:#0B0913;font-size:13px;font-weight:500;padding:7px 18px;border-radius:100px;transition:background 0.2s,transform 0.15s;white-space:nowrap;}
+.nav-cta:hover{background:var(--gold-lt);transform:scale(1.03);}
+@media(max-width:768px){.nav-links{display:none;}nav{padding:0.9rem 1.25rem;}}
 
-  --serif:     'Noto Serif TC', 'Georgia', serif;
-  --sans:      'Noto Sans TC', 'PingFang TC', sans-serif;
+section{position:relative;z-index:1;}
+.container{max-width:960px;margin:0 auto;padding:0 1.5rem;}
+.section-label{font-size:11px;font-weight:500;letter-spacing:0.14em;color:var(--gold);text-transform:uppercase;margin-bottom:0.75rem;}
+.section-title{font-family:var(--serif);font-size:clamp(1.75rem,5vw,2.75rem);font-weight:900;line-height:1.25;color:var(--text);margin-bottom:1rem;}
+.section-sub{font-size:15px;color:var(--text-2);max-width:540px;line-height:1.8;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s var(--ease),transform 0.7s var(--ease);}
+.reveal.visible{opacity:1;transform:none;}
+.divider{width:48px;height:1px;background:var(--gold);opacity:0.4;margin:1.5rem 0;}
+.divider.center{margin:1.5rem auto;}
+.delay-1{transition-delay:0.1s;}.delay-2{transition-delay:0.2s;}.delay-3{transition-delay:0.3s;}
 
-  --ease:      cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* HERO */
+#hero{min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 5rem;overflow:hidden;}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(212,160,32,0.12) 0%,transparent 70%);pointer-events:none;}
+.hero-orbit{width:300px;height:300px;border-radius:50%;border:0.5px solid rgba(212,160,32,0.15);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 40s linear infinite;}
+.hero-orbit-2{width:480px;height:480px;border:0.5px solid rgba(201,72,56,0.1);animation-duration:65s;animation-direction:reverse;}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+.hero-icon{font-size:4.5rem;display:block;margin-bottom:1.5rem;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(212,160,32,0.5));}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hero-eyebrow{font-size:12px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:1.25rem;}
+.hero-h1{font-family:var(--serif);font-size:clamp(2.4rem,7vw,4.2rem);font-weight:900;line-height:1.15;margin-bottom:1.25rem;}
+.hero-h1 em{font-style:normal;color:var(--gold);text-shadow:0 0 40px rgba(212,160,32,0.4);}
+.hero-p{font-size:clamp(14px,2.5vw,17px);color:var(--text-2);line-height:1.85;max-width:500px;margin:0 auto 2.5rem;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#0B0913;font-size:15px;font-weight:500;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 24px rgba(212,160,32,0.3);}
+.btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,160,32,0.4);}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text-2);font-size:15px;padding:14px 24px;border-radius:100px;border:0.5px solid rgba(255,255,255,0.2);cursor:pointer;transition:border-color 0.2s,color 0.2s,transform 0.15s;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.4;animation:bounce 2.5s ease-in-out infinite;}
+.hero-scroll span{font-size:10px;letter-spacing:0.12em;color:var(--text-3);}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
 
-/* ─── RESET ──────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.75;
-  font-size: 16px;
-  overflow-x: hidden;
-}
-img { max-width: 100%; }
-a { color: inherit; text-decoration: none; }
+/* BADGES */
+#badges{padding:2rem 0;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);background:rgba(255,255,255,0.02);}
+.badges-row{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;align-items:center;}
+.badge-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);}
+.badge-icon{font-size:1.25rem;}
 
-/* ─── STARFIELD ───────────────────────────────────────────── */
-.stars-wrap {
-  position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  overflow: hidden;
-}
-.star {
-  position: absolute;
-  border-radius: 50%;
-  background: #fff;
-  opacity: 0;
-  animation: twinkle var(--dur, 4s) var(--delay, 0s) infinite ease-in-out;
-}
-@keyframes twinkle {
-  0%, 100% { opacity: 0; transform: scale(0.6); }
-  50%       { opacity: var(--op, 0.6); transform: scale(1); }
-}
+/* FORTUNE */
+#fortune{padding:5rem 0;background:var(--bg-2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);}
+.fortune-header{text-align:center;margin-bottom:2.5rem;}
+.fortune-date-badge{display:inline-block;background:rgba(212,160,32,0.1);border:0.5px solid var(--border-hi);border-radius:100px;padding:5px 20px;font-size:12px;color:var(--gold);letter-spacing:0.08em;margin-bottom:1rem;}
+.fortune-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+@media(max-width:720px){.fortune-cards{grid-template-columns:repeat(2,1fr);}}
+.fortune-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem 1rem;text-align:center;transition:border-color 0.3s,transform 0.3s var(--ease);}
+.fortune-card:hover{border-color:var(--border-hi);transform:translateY(-3px);}
+.fortune-card-icon{font-size:2rem;margin-bottom:0.75rem;display:block;}
+.fortune-card-label{font-size:10px;letter-spacing:0.12em;color:var(--text-3);text-transform:uppercase;margin-bottom:0.5rem;}
+.fortune-card-value{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--text);line-height:1.3;}
+.fortune-card-sub{font-size:11px;color:var(--text-2);margin-top:4px;}
+.fortune-color-swatch{width:36px;height:36px;border-radius:50%;margin:0 auto 0.5rem;border:2px solid rgba(255,255,255,0.1);}
+.fortune-message{background:var(--bg-card);border:0.5px solid var(--border);border-left:2px solid var(--gold);border-radius:0 12px 12px 0;padding:1.25rem 1.5rem;max-width:680px;margin:0 auto;}
+.fortune-msg-label{font-size:11px;color:var(--gold);letter-spacing:0.1em;margin-bottom:6px;}
+.fortune-msg-text{font-size:14px;color:var(--text);line-height:1.85;}
 
-/* ─── NAV ─────────────────────────────────────────────────── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 2rem;
-  background: rgba(11,9,19,0.80);
-  backdrop-filter: blur(12px);
-  border-bottom: 0.5px solid var(--border);
-  transition: background 0.3s;
-}
-.nav-logo {
-  font-family: var(--serif);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--gold);
-  letter-spacing: 0.06em;
-}
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a {
-  font-size: 13px; color: var(--text-2); letter-spacing: 0.04em;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
-.nav-cta {
-  background: var(--gold);
-  color: #0B0913;
-  font-size: 13px; font-weight: 500;
-  padding: 7px 18px;
-  border-radius: 100px;
-  transition: background 0.2s, transform 0.15s;
-  white-space: nowrap;
-}
-.nav-cta:hover { background: var(--gold-lt); transform: scale(1.03); }
-@media (max-width: 680px) {
-  .nav-links { display: none; }
-  nav { padding: 0.9rem 1.25rem; }
-}
+/* SERVICES */
+#services{padding:7rem 0;}
+.services-header{text-align:center;margin-bottom:4rem;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+@media(max-width:720px){.services-grid{grid-template-columns:1fr;}}
+.service-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:16px;padding:2rem 1.75rem;position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s var(--ease);}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.service-card:hover{border-color:var(--border-hi);transform:translateY(-4px);}
+.service-card:hover::before{opacity:1;}
+.service-card.featured{border-color:rgba(212,160,32,0.35);background:rgba(212,160,32,0.05);}
+.service-card.featured::before{opacity:0.6;}
+.featured-tag{display:inline-block;background:var(--gold);color:#0B0913;font-size:10px;font-weight:500;letter-spacing:0.08em;padding:3px 10px;border-radius:100px;margin-bottom:1.25rem;}
+.service-emoji{font-size:2.5rem;margin-bottom:1.25rem;display:block;}
+.service-name{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--text);margin-bottom:0.75rem;}
+.service-desc{font-size:14px;color:var(--text-2);line-height:1.8;margin-bottom:1.25rem;}
+.service-when{font-size:12px;color:var(--gold);border-top:0.5px solid var(--border);padding-top:1rem;line-height:1.7;}
+.service-price{display:inline-block;font-size:13px;font-weight:500;color:var(--gold);background:rgba(212,160,32,0.1);border:0.5px solid rgba(212,160,32,0.3);padding:4px 12px;border-radius:100px;margin-top:1rem;}
 
-/* ─── SECTION COMMON ──────────────────────────────────────── */
-section { position: relative; z-index: 1; }
-.container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
-.section-label {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
-  color: var(--gold); text-transform: uppercase; margin-bottom: 0.75rem;
-}
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(1.75rem, 5vw, 2.75rem);
-  font-weight: 900; line-height: 1.25;
-  color: var(--text);
-  margin-bottom: 1rem;
-}
-.section-sub {
-  font-size: 15px; color: var(--text-2);
-  max-width: 540px; line-height: 1.8;
-}
-.reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-}
-.reveal.visible { opacity: 1; transform: none; }
+/* EXPERIENCE */
+#experience{padding:7rem 0;background:var(--bg-2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);}
+.exp-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+@media(max-width:720px){.exp-inner{grid-template-columns:1fr;gap:3rem;}}
+.exp-steps{display:flex;flex-direction:column;}
+.exp-step{display:flex;gap:1.5rem;align-items:flex-start;padding:1.5rem 0;border-bottom:0.5px solid rgba(255,255,255,0.05);}
+.exp-step:last-child{border-bottom:none;}
+.exp-num{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:14px;font-weight:600;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.exp-step-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.exp-step-body{font-size:13px;color:var(--text-2);line-height:1.75;}
+.exp-visual{display:flex;flex-direction:column;gap:1rem;}
+.exp-quote-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem;position:relative;}
+.exp-quote-card::before{content:'\201C';font-family:var(--serif);font-size:4rem;color:var(--gold);opacity:0.2;position:absolute;top:0.5rem;left:1rem;line-height:1;}
+.exp-quote-text{font-size:14px;color:var(--text);line-height:1.8;padding-top:0.5rem;}
+.exp-quote-from{font-size:12px;color:var(--text-3);margin-top:0.75rem;}
 
-/* ─── DIVIDER ─────────────────────────────────────────────── */
-.divider {
-  width: 48px; height: 1px;
-  background: var(--gold);
-  opacity: 0.4;
-  margin: 1.5rem 0;
-}
-.divider.center { margin: 1.5rem auto; }
+/* STORY */
+#story{padding:7rem 0;}
+.story-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+@media(max-width:720px){.story-inner{grid-template-columns:1fr;gap:3rem;}}
+.story-text p{font-size:15px;color:var(--text-2);line-height:1.9;margin-bottom:1.25rem;}
+.story-text strong{color:var(--text);font-weight:500;}
+.story-pull{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--gold);line-height:1.6;border-left:2px solid var(--gold);padding:1rem 1.25rem;margin:2rem 0;background:rgba(212,160,32,0.05);border-radius:0 8px 8px 0;}
+.geo-chain{display:flex;flex-direction:column;}
+.geo-node{display:flex;gap:1.25rem;align-items:flex-start;padding:1.5rem 0;}
+.geo-dot-wrap{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.geo-dot{width:44px;height:44px;border-radius:50%;border:0.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:rgba(212,160,32,0.07);}
+.geo-line{width:0.5px;flex:1;min-height:24px;background:linear-gradient(to bottom,var(--gold-dk),transparent);opacity:0.3;margin:4px 0;}
+.geo-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:4px;}
+.geo-desc{font-size:13px;color:var(--text-2);line-height:1.75;}
 
-/* ─── HERO ────────────────────────────────────────────────── */
-#hero {
-  min-height: 100svh;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center;
-  padding: 8rem 1.5rem 5rem;
-  position: relative; overflow: hidden;
-}
-.hero-glow {
-  position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
-  width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(212,160,32,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-orbit {
-  width: 300px; height: 300px; border-radius: 50%;
-  border: 0.5px solid rgba(212,160,32,0.15);
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: spin 40s linear infinite;
-}
-.hero-orbit-2 {
-  width: 480px; height: 480px;
-  border: 0.5px solid rgba(201,72,56,0.1);
-  animation-duration: 65s;
-  animation-direction: reverse;
-}
-@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+/* TESTIMONIALS */
+#testimonials{padding:7rem 0;background:var(--bg-2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);}
+.testi-header{text-align:center;margin-bottom:3.5rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+@media(max-width:720px){.testi-grid{grid-template-columns:1fr;}}
+.testi-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:14px;padding:1.5rem;transition:border-color 0.3s,transform 0.3s var(--ease);}
+.testi-card:hover{border-color:var(--border-hi);transform:translateY(-3px);}
+.testi-stars{color:var(--gold);font-size:14px;margin-bottom:1rem;letter-spacing:2px;}
+.testi-text{font-size:14px;color:var(--text);line-height:1.8;margin-bottom:1.25rem;}
+.testi-from{font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:8px;}
+.testi-avatar{width:28px;height:28px;border-radius:50%;background:rgba(212,160,32,0.15);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;}
 
-.hero-icon {
-  font-size: 4.5rem; display: block; margin-bottom: 1.5rem;
-  animation: float 5s ease-in-out infinite;
-  filter: drop-shadow(0 0 24px rgba(212,160,32,0.5));
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-12px); }
-}
-.hero-eyebrow {
-  font-size: 12px; letter-spacing: 0.2em; color: var(--gold);
-  text-transform: uppercase; margin-bottom: 1.25rem;
-}
-.hero-h1 {
-  font-family: var(--serif);
-  font-size: clamp(2.4rem, 7vw, 4.2rem);
-  font-weight: 900; line-height: 1.15;
-  color: var(--text);
-  margin-bottom: 1.25rem;
-}
-.hero-h1 em {
-  font-style: normal; color: var(--gold);
-  text-shadow: 0 0 40px rgba(212,160,32,0.4);
-}
-.hero-p {
-  font-size: clamp(14px, 2.5vw, 17px);
-  color: var(--text-2); line-height: 1.85;
-  max-width: 500px; margin: 0 auto 2.5rem;
-}
-.hero-btns {
-  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-}
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--gold); color: #0B0913;
-  font-size: 15px; font-weight: 500; letter-spacing: 0.03em;
-  padding: 14px 28px; border-radius: 100px;
-  border: none; cursor: pointer;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 4px 24px rgba(212,160,32,0.3);
-}
-.btn-primary:hover {
-  background: var(--gold-lt);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(212,160,32,0.4);
-}
-.btn-outline {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: transparent; color: var(--text-2);
-  font-size: 15px; font-weight: 400;
-  padding: 14px 24px; border-radius: 100px;
-  border: 0.5px solid rgba(255,255,255,0.2);
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, transform 0.15s;
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+/* BOOKING */
+#booking{padding:7rem 0;border-top:0.5px solid var(--border);}
+.booking-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start;}
+@media(max-width:720px){.booking-inner{grid-template-columns:1fr;gap:2.5rem;}}
+.booking-info p{font-size:14px;color:var(--text-2);line-height:1.85;margin-bottom:1rem;}
+.booking-legend{display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:1.5rem;}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.booking-panel{background:var(--bg-card);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:0.5px solid var(--border);}
+.cal-month-title{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);}
+.cal-nav-btn{background:none;border:0.5px solid var(--border);border-radius:8px;color:var(--text-2);font-size:14px;padding:4px 12px;cursor:pointer;transition:all 0.15s;font-family:var(--sans);}
+.cal-nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);padding:0.75rem 1rem 0.25rem;}
+.cal-wd{text-align:center;font-size:11px;color:var(--text-3);padding-bottom:4px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:0 0.75rem 0.75rem;gap:3px;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:8px;cursor:default;color:var(--text-3);position:relative;}
+.cal-day.has-slot{background:rgba(42,173,160,0.12);border:0.5px solid rgba(42,173,160,0.35);color:var(--text);cursor:pointer;transition:all 0.15s;}
+.cal-day.has-slot:hover{background:rgba(42,173,160,0.28);border-color:var(--teal);}
+.cal-day.has-slot.selected{background:var(--teal);border-color:var(--teal);color:#fff;}
+.cal-day.full-slot{background:rgba(201,72,56,0.07);border:0.5px solid rgba(201,72,56,0.18);color:var(--text-3);cursor:not-allowed;}
+.cal-day.today::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold);}
+.time-panel{border-top:0.5px solid var(--border);padding:1rem 1.25rem;display:none;}
+.time-panel.visible{display:block;}
+.time-panel-title{font-size:11px;color:var(--gold);letter-spacing:0.1em;margin-bottom:0.75rem;}
+.time-slots{display:flex;flex-wrap:wrap;gap:8px;}
+.time-slot{background:rgba(42,173,160,0.1);border:0.5px solid rgba(42,173,160,0.3);border-radius:8px;padding:6px 14px;font-size:13px;color:var(--text);cursor:pointer;transition:all 0.15s;font-family:var(--sans);}
+.time-slot:hover{background:rgba(42,173,160,0.28);border-color:var(--teal);}
+.time-slot.booked{background:rgba(201,72,56,0.06);border-color:rgba(201,72,56,0.2);color:var(--text-3);cursor:not-allowed;text-decoration:line-through;}
+.booking-confirm{border-top:0.5px solid var(--border);padding:1rem 1.25rem;display:none;}
+.booking-confirm.visible{display:block;}
+.booking-confirm-info{font-size:13px;color:var(--text-2);background:rgba(212,160,32,0.06);border:0.5px solid var(--border);border-radius:10px;padding:10px 14px;margin-bottom:12px;line-height:1.75;}
+.booking-confirm-btn{display:block;width:100%;text-align:center;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:var(--sans);}
+.booking-confirm-btn:hover{filter:brightness(1.1);transform:translateY(-1px);}
 
-.hero-scroll {
-  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  opacity: 0.4; animation: bounce 2.5s ease-in-out infinite;
-}
-.hero-scroll span { font-size: 10px; letter-spacing: 0.12em; color: var(--text-3); }
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%       { transform: translateX(-50%) translateY(6px); }
-}
+/* PRICING */
+#pricing{padding:7rem 0;background:var(--bg-2);border-top:0.5px solid var(--border);}
+.pricing-header{text-align:center;margin-bottom:3.5rem;}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+@media(max-width:900px){.pricing-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:500px){.pricing-grid{grid-template-columns:1fr;}}
+.pricing-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:16px;padding:1.75rem 1.5rem;display:flex;flex-direction:column;transition:border-color 0.3s,transform 0.3s var(--ease);position:relative;overflow:hidden;}
+.pricing-card:hover{border-color:var(--border-hi);transform:translateY(-4px);}
+.pricing-card.best{border-color:rgba(212,160,32,0.45);background:rgba(212,160,32,0.06);}
+.best-badge{position:absolute;top:1rem;right:1rem;background:var(--gold);color:#0B0913;font-size:10px;font-weight:500;padding:3px 10px;border-radius:100px;}
+.pricing-emoji{font-size:2rem;margin-bottom:1rem;display:block;}
+.pricing-name{font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;}
+.pricing-tagline{font-size:12px;color:var(--text-2);margin-bottom:1.25rem;line-height:1.6;}
+.pricing-amount{font-family:var(--serif);font-size:2rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:0.2rem;}
+.pricing-currency{font-size:0.9rem;font-weight:400;color:var(--text-2);}
+.pricing-duration{font-size:11px;color:var(--text-3);margin-bottom:1.5rem;}
+.pricing-features{flex:1;}
+.pricing-feature{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--text-2);padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.04);line-height:1.55;}
+.pricing-feature:last-child{border-bottom:none;}
+.pricing-check{color:var(--teal);flex-shrink:0;margin-top:1px;font-size:11px;}
+.pricing-cta{display:block;text-align:center;margin-top:1.5rem;padding:10px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;border:0.5px solid var(--border-hi);color:var(--gold);background:transparent;font-family:var(--sans);}
+.pricing-cta:hover{background:rgba(212,160,32,0.1);}
+.pricing-card.best .pricing-cta{background:var(--gold);color:#0B0913;border-color:var(--gold);}
+.pricing-card.best .pricing-cta:hover{background:var(--gold-lt);}
 
-/* ─── BADGES STRIP ────────────────────────────────────────── */
-#badges {
-  padding: 2rem 0;
-  border-top: 0.5px solid var(--border);
-  border-bottom: 0.5px solid var(--border);
-  background: rgba(255,255,255,0.02);
-}
-.badges-row {
-  display: flex; gap: 2rem;
-  justify-content: center; flex-wrap: wrap;
-  align-items: center;
-}
-.badge-item {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 13px; color: var(--text-2);
-}
-.badge-icon { font-size: 1.25rem; }
+/* LOCATION */
+#location{padding:7rem 0;background:var(--bg);border-top:0.5px solid var(--border);}
+.location-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+@media(max-width:720px){.location-inner{grid-template-columns:1fr;gap:2.5rem;}}
+.location-info-list{display:flex;flex-direction:column;gap:1.25rem;margin-top:2rem;}
+.location-info-row{display:flex;gap:1rem;align-items:flex-start;}
+.location-info-icon{width:38px;height:38px;border-radius:10px;background:rgba(212,160,32,0.1);border:0.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.location-info-label{font-size:11px;color:var(--text-3);letter-spacing:0.06em;margin-bottom:2px;}
+.location-info-val{font-size:14px;color:var(--text);line-height:1.65;}
+.map-box{border-radius:14px;overflow:hidden;border:0.5px solid var(--border);height:320px;}
+.map-box iframe{width:100%;height:100%;border:0;display:block;filter:invert(0.88) hue-rotate(180deg) saturate(0.6) brightness(0.85);}
 
-/* ─── SERVICES ────────────────────────────────────────────── */
-#services { padding: 7rem 0; }
-.services-header { text-align: center; margin-bottom: 4rem; }
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-@media (max-width: 720px) { .services-grid { grid-template-columns: 1fr; } }
-.service-card {
-  background: var(--bg-card);
-  border: 0.5px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem 1.75rem;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s var(--ease);
-}
-.service-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0; transition: opacity 0.3s;
-}
-.service-card:hover { border-color: var(--border-hi); transform: translateY(-4px); }
-.service-card:hover::before { opacity: 1; }
-.service-card.featured {
-  border-color: rgba(212,160,32,0.35);
-  background: rgba(212,160,32,0.05);
-}
-.service-card.featured::before { opacity: 0.6; }
-.featured-tag {
-  display: inline-block;
-  background: var(--gold); color: #0B0913;
-  font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
-  padding: 3px 10px; border-radius: 100px;
-  margin-bottom: 1.25rem;
-}
-.service-emoji { font-size: 2.5rem; margin-bottom: 1.25rem; display: block; }
-.service-name {
-  font-family: var(--serif);
-  font-size: 1.25rem; font-weight: 600;
-  color: var(--text); margin-bottom: 0.75rem;
-}
-.service-desc { font-size: 14px; color: var(--text-2); line-height: 1.8; margin-bottom: 1.25rem; }
-.service-when {
-  font-size: 12px; color: var(--gold);
-  border-top: 0.5px solid var(--border);
-  padding-top: 1rem; line-height: 1.7;
-}
-.service-price {
-  display: inline-block;
-  font-size: 13px; font-weight: 500;
-  color: var(--gold);
-  background: rgba(212,160,32,0.1);
-  border: 0.5px solid rgba(212,160,32,0.3);
-  padding: 4px 12px; border-radius: 100px;
-  margin-top: 1rem;
-}
+/* CTA */
+#cta{padding:7rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:400px;border-radius:50%;background:radial-gradient(ellipse,rgba(201,72,56,0.08) 0%,transparent 70%);pointer-events:none;}
+.cta-pre{font-size:12px;letter-spacing:0.2em;color:var(--text-3);text-transform:uppercase;margin-bottom:1.5rem;}
+.cta-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.2;margin-bottom:1.25rem;}
+.cta-title em{font-style:normal;color:var(--gold);}
+.cta-sub{font-size:15px;color:var(--text-2);max-width:440px;margin:0 auto 2.5rem;line-height:1.8;}
+.cta-note{font-size:12px;color:var(--text-3);margin-top:1.25rem;}
 
-/* ─── EXPERIENCE FLOW ─────────────────────────────────────── */
-#experience {
-  padding: 7rem 0;
-  background: var(--bg-2);
-  border-top: 0.5px solid var(--border);
-  border-bottom: 0.5px solid var(--border);
-}
-.exp-inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: center;
-}
-@media (max-width: 720px) { .exp-inner { grid-template-columns: 1fr; gap: 3rem; } }
-.exp-steps { display: flex; flex-direction: column; gap: 0; }
-.exp-step {
-  display: flex; gap: 1.5rem; align-items: flex-start;
-  padding: 1.5rem 0;
-  border-bottom: 0.5px solid rgba(255,255,255,0.05);
-  transition: background 0.2s;
-}
-.exp-step:last-child { border-bottom: none; }
-.exp-num {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 0.5px solid var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-size: 14px; font-weight: 600;
-  color: var(--gold); flex-shrink: 0; margin-top: 2px;
-}
-.exp-step-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-.exp-step-body { font-size: 13px; color: var(--text-2); line-height: 1.75; }
-
-.exp-visual {
-  display: flex; flex-direction: column; gap: 1rem;
-}
-.exp-quote-card {
-  background: var(--bg-card);
-  border: 0.5px solid var(--border);
-  border-radius: 14px;
-  padding: 1.5rem;
-  position: relative;
-}
-.exp-quote-card::before {
-  content: '\201C';
-  font-family: var(--serif); font-size: 4rem;
-  color: var(--gold); opacity: 0.2;
-  position: absolute; top: 0.5rem; left: 1rem;
-  line-height: 1;
-}
-.exp-quote-text { font-size: 14px; color: var(--text); line-height: 1.8; padding-top: 0.5rem; }
-.exp-quote-from { font-size: 12px; color: var(--text-3); margin-top: 0.75rem; }
-
-/* ─── STORY ───────────────────────────────────────────────── */
-#story { padding: 7rem 0; }
-.story-inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: start;
-}
-@media (max-width: 720px) { .story-inner { grid-template-columns: 1fr; gap: 3rem; } }
-.story-text p {
-  font-size: 15px; color: var(--text-2); line-height: 1.9;
-  margin-bottom: 1.25rem;
-}
-.story-text strong { color: var(--text); font-weight: 500; }
-.story-pull {
-  font-family: var(--serif);
-  font-size: 1.15rem; font-weight: 600;
-  color: var(--gold); line-height: 1.6;
-  border-left: 2px solid var(--gold);
-  padding: 1rem 1.25rem;
-  margin: 2rem 0;
-  background: rgba(212,160,32,0.05);
-  border-radius: 0 8px 8px 0;
-}
-
-.geo-chain {
-  display: flex; flex-direction: column; gap: 0;
-}
-.geo-node {
-  display: flex; gap: 1.25rem; align-items: flex-start;
-  padding: 1.5rem 0;
-}
-.geo-dot-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  flex-shrink: 0;
-}
-.geo-dot {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: 0.5px solid var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  background: rgba(212,160,32,0.07);
-}
-.geo-line {
-  width: 0.5px; flex: 1; min-height: 24px;
-  background: linear-gradient(to bottom, var(--gold-dk), transparent);
-  opacity: 0.3; margin: 4px 0;
-}
-.geo-info {}
-.geo-name {
-  font-family: var(--serif); font-size: 1rem; font-weight: 600;
-  color: var(--text); margin-bottom: 4px;
-}
-.geo-desc { font-size: 13px; color: var(--text-2); line-height: 1.75; }
-
-/* ─── TESTIMONIALS ────────────────────────────────────────── */
-#testimonials {
-  padding: 7rem 0;
-  background: var(--bg-2);
-  border-top: 0.5px solid var(--border);
-  border-bottom: 0.5px solid var(--border);
-}
-.testi-header { text-align: center; margin-bottom: 3.5rem; }
-.testi-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
-}
-@media (max-width: 720px) { .testi-grid { grid-template-columns: 1fr; } }
-.testi-card {
-  background: var(--bg-card);
-  border: 0.5px solid var(--border);
-  border-radius: 14px; padding: 1.5rem;
-  transition: border-color 0.3s, transform 0.3s var(--ease);
-}
-.testi-card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
-.testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 1rem; letter-spacing: 2px; }
-.testi-text { font-size: 14px; color: var(--text); line-height: 1.8; margin-bottom: 1.25rem; }
-.testi-from {
-  font-size: 12px; color: var(--text-3);
-  display: flex; align-items: center; gap: 8px;
-}
-.testi-avatar {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: rgba(212,160,32,0.15);
-  border: 0.5px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px;
-}
-
-/* ─── PRICING ─────────────────────────────────────────────── */
-#pricing { padding: 7rem 0; }
-.pricing-header { text-align: center; margin-bottom: 3.5rem; }
-.pricing-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
-}
-@media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; } }
-.pricing-card {
-  background: var(--bg-card);
-  border: 0.5px solid var(--border);
-  border-radius: 16px; padding: 2rem 1.75rem;
-  display: flex; flex-direction: column;
-  transition: border-color 0.3s, transform 0.3s var(--ease);
-  position: relative; overflow: hidden;
-}
-.pricing-card:hover { border-color: var(--border-hi); transform: translateY(-4px); }
-.pricing-card.best {
-  border-color: rgba(212,160,32,0.45);
-  background: rgba(212,160,32,0.06);
-}
-.best-badge {
-  position: absolute; top: 1rem; right: 1rem;
-  background: var(--gold); color: #0B0913;
-  font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
-  padding: 3px 10px; border-radius: 100px;
-}
-.pricing-name {
-  font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
-  color: var(--text); margin-bottom: 0.5rem;
-}
-.pricing-tagline { font-size: 13px; color: var(--text-2); margin-bottom: 1.5rem; line-height: 1.6; }
-.pricing-amount {
-  font-family: var(--serif); font-size: 2.25rem; font-weight: 900;
-  color: var(--gold); line-height: 1; margin-bottom: 0.25rem;
-}
-.pricing-currency { font-size: 1rem; font-weight: 400; color: var(--text-2); }
-.pricing-duration { font-size: 12px; color: var(--text-3); margin-bottom: 1.75rem; }
-.pricing-features { flex: 1; }
-.pricing-feature {
-  display: flex; gap: 10px; align-items: flex-start;
-  font-size: 13px; color: var(--text-2);
-  padding: 7px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04);
-  line-height: 1.6;
-}
-.pricing-feature:last-child { border-bottom: none; }
-.pricing-check { color: var(--teal); flex-shrink: 0; margin-top: 1px; font-size: 12px; }
-.pricing-cta {
-  display: block; text-align: center;
-  margin-top: 1.75rem;
-  padding: 12px;
-  border-radius: 100px;
-  font-size: 14px; font-weight: 500;
-  cursor: pointer; transition: all 0.2s;
-  border: 0.5px solid var(--border-hi);
-  color: var(--gold);
-  background: transparent;
-}
-.pricing-cta:hover { background: rgba(212,160,32,0.1); }
-.pricing-card.best .pricing-cta {
-  background: var(--gold); color: #0B0913; border-color: var(--gold);
-}
-.pricing-card.best .pricing-cta:hover { background: var(--gold-lt); }
-
-/* ─── LOCATION ────────────────────────────────────────────── */
-#location {https://maps.app.goo.gl/9LBu2or43nmYucfN8?g_st=ic
-  padding: 7rem 0;
-  background: var(--bg-2);
-  border-top: 0.5px solid var(--border);
-}
-.location-inner {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 4rem; align-items: start;
-}
-@media (max-width: 720px) { .location-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
-.location-info-list { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
-.location-info-row {
-  display: flex; gap: 1rem; align-items: flex-start;
-}
-.location-info-icon {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: rgba(212,160,32,0.1);
-  border: 0.5px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; flex-shrink: 0;
-}
-.location-info-label { font-size: 11px; color: var(--text-3); letter-spacing: 0.06em; margin-bottom: 2px; }
-.location-info-val { font-size: 14px; color: var(--text); line-height: 1.65; }
-
-.map-placeholder {
-  background: var(--bg-card);
-  border: 0.5px solid var(--border);
-  border-radius: 14px; overflow: hidden;
-  height: 320px;
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 1rem;
-  color: var(--text-3); font-size: 13px;
-}
-/* 把這段 iframe 換成你真實的 Google Maps 嵌入 */
-.map-placeholder iframe {
-  width: 100%; height: 100%; border: none;
-}
-
-/* ─── FINAL CTA ───────────────────────────────────────────── */
-#cta {
-  padding: 7rem 1.5rem;
-  text-align: center;
-  position: relative; overflow: hidden;
-}
-.cta-glow {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 700px; height: 400px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(201,72,56,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.cta-pre {
-  font-size: 12px; letter-spacing: 0.2em; color: var(--text-3);
-  text-transform: uppercase; margin-bottom: 1.5rem;
-}
-.cta-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 900; line-height: 1.2;
-  color: var(--text);
-  margin-bottom: 1.25rem;
-}
-.cta-title em { font-style: normal; color: var(--gold); }
-.cta-sub {
-  font-size: 15px; color: var(--text-2); max-width: 440px;
-  margin: 0 auto 2.5rem; line-height: 1.8;
-}
-.cta-note {
-  font-size: 12px; color: var(--text-3); margin-top: 1.25rem;
-}
-
-/* ─── FOOTER ──────────────────────────────────────────────── */
-footer {
-  position: relative; z-index: 1;
-  border-top: 0.5px solid var(--border);
-  padding: 2.5rem 1.5rem;
-}
-.footer-inner {
-  max-width: 960px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
-}
-.footer-brand {
-  font-family: var(--serif); font-size: 0.9rem; font-weight: 600;
-  color: var(--gold);
-}
-.footer-links {
-  display: flex; gap: 1.5rem; flex-wrap: wrap;
-}
-.footer-links a {
-  font-size: 12px; color: var(--text-3);
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--gold); }
-.footer-copy { font-size: 12px; color: var(--text-3); }
-
-/* ─── SCROLL ANIMATION DELAYS ─────────────────────────────── */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:0.5px solid var(--border);padding:2.5rem 1.5rem;}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-brand{font-family:var(--serif);font-size:0.9rem;font-weight:600;color:var(--gold);}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-size:12px;color:var(--text-3);transition:color 0.2s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:12px;color:var(--text-3);}
 </style>
 </head>
-
 <body>
 
-<!-- ── STARS ──────────────────────────────────────────────── -->
 <div class="stars-wrap" id="stars"></div>
 
-<!-- ── NAV ────────────────────────────────────────────────── -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">外星人祈願雞蛋糕</div>
   <div class="nav-links">
+    <a href="#fortune">今日運勢</a>
     <a href="#services">服務</a>
-    <a href="#story">關於</a>
-    <a href="#pricing">預約</a>
+    <a href="#booking">預約老師</a>
+    <a href="#pricing">方案費用</a>
     <a href="#location">找到我們</a>
   </div>
-  <!-- 替換下方 href 為你的 LINE 加好友連結 -->
-  <a href="https://line.me/R/ti/p/@964zvzfe" class="nav-cta" target="_blank">加 LINE 預約</a>
+  <a href="https://line.me/R/ti/p/@你的LINE_ID" class="nav-cta" target="_blank">加 LINE 預約</a>
 </nav>
 
-<!-- ── HERO ────────────────────────────────────────────────── -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-orbit"></div>
   <div class="hero-orbit hero-orbit-2"></div>
-
-  <div style="position:relative; z-index:1; max-width: 700px;">
+  <div style="position:relative;z-index:1;max-width:700px;">
     <span class="hero-icon">👽</span>
     <p class="hero-eyebrow">鹿港老街 · 週六日 10:00–17:00</p>
-    <h1 class="hero-h1">
-      你的願望，<br><em>宇宙聽到了。</em>
-    </h1>
-    <p class="hero-p">
-      在媽祖守護的老街口，有個外星人在等你。<br>
-      用一把刀、一張卦、一顆雞蛋糕，<br>
-      幫你找回自己。
-    </p>
+    <h1 class="hero-h1">你的願望，<br><em>宇宙聽到了。</em></h1>
+    <p class="hero-p">在媽祖守護的老街口，有個外星人在等你。<br>用一把刀、一張卦、一顆雞蛋糕，幫你找回自己。</p>
     <div class="hero-btns">
-      <!-- 替換 href 為你的 LINE 加好友連結 -->
-      <a href="https://line.me/R/ti/p/@964zvzfe" class="btn-primary" target="_blank">
-        加 LINE，預約體驗
-      </a>
-      <a href="#services" class="btn-outline">了解更多</a>
+      <a href="https://line.me/R/ti/p/@你的LINE_ID" class="btn-primary" target="_blank">加 LINE，預約體驗</a>
+      <a href="#fortune" class="btn-outline">看今日運勢</a>
     </div>
   </div>
-
-  <div class="hero-scroll">
-    <span>往下看</span>
-    <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
-      <path d="M1 1L8 8L15 1" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-  </div>
+  <div class="hero-scroll"><span>往下看</span><svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 1L8 8L15 1" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
 </section>
 
-<!-- ── BADGES ──────────────────────────────────────────────── -->
+<!-- BADGES -->
 <section id="badges">
   <div class="container">
     <div class="badges-row">
-      <div class="badge-item">
-        <span class="badge-icon">🏮</span>
-        <span>鹿港天后宮旁</span>
-      </div>
-      <div class="badge-item">
-        <span class="badge-icon">🗡️</span>
-        <span>刀療療癒</span>
-      </div>
-      <div class="badge-item">
-        <span class="badge-icon">☯️</span>
-        <span>易經 · 塔羅諮詢</span>
-      </div>
-      <div class="badge-item">
-        <span class="badge-icon">🥚</span>
-        <span>外星人祈願雞蛋糕</span>
-      </div>
-      <div class="badge-item">
-        <span class="badge-icon">✨</span>
-        <span>首次體驗免費</span>
-      </div>
+      <div class="badge-item"><span class="badge-icon">🏮</span><span>鹿港天后宮旁</span></div>
+      <div class="badge-item"><span class="badge-icon">🗡️</span><span>刀療療癒</span></div>
+      <div class="badge-item"><span class="badge-icon">☯️</span><span>易經 · 塔羅諮詢</span></div>
+      <div class="badge-item"><span class="badge-icon">🥚</span><span>外星人祈願雞蛋糕</span></div>
+      <div class="badge-item"><span class="badge-icon">✨</span><span>首次體驗免費</span></div>
     </div>
   </div>
 </section>
 
-<!-- ── SERVICES ────────────────────────────────────────────── -->
+<!-- FORTUNE -->
+<section id="fortune">
+  <div class="container">
+    <div class="fortune-header reveal">
+      <p class="section-label">每日靈感</p>
+      <h2 class="section-title">今日運勢</h2>
+      <div class="divider center"></div>
+      <div class="fortune-date-badge" id="fortune-date-label">載入中...</div>
+      <p class="section-sub" style="margin:0 auto;font-size:13px;">由老師依易經節氣推算，每日更新。讓宇宙給你今天的指引。</p>
+    </div>
+    <div class="fortune-cards reveal">
+      <div class="fortune-card">
+        <span class="fortune-card-icon">🌈</span>
+        <div class="fortune-card-label">幸運顏色</div>
+        <div class="fortune-color-swatch" id="fortune-color-swatch"></div>
+        <div class="fortune-card-value" id="fortune-color">—</div>
+        <div class="fortune-card-sub" id="fortune-color-sub">能量加持</div>
+      </div>
+      <div class="fortune-card">
+        <span class="fortune-card-icon">💎</span>
+        <div class="fortune-card-label">建議飾品</div>
+        <div class="fortune-card-value" id="fortune-gem">—</div>
+        <div class="fortune-card-sub" id="fortune-gem-sub">穿戴在身上</div>
+      </div>
+      <div class="fortune-card">
+        <span class="fortune-card-icon">🔢</span>
+        <div class="fortune-card-label">幸運數字</div>
+        <div class="fortune-card-value" id="fortune-num" style="font-size:2rem;">—</div>
+        <div class="fortune-card-sub" id="fortune-num-sub">今日能量數</div>
+      </div>
+      <div class="fortune-card">
+        <span class="fortune-card-icon">🧭</span>
+        <div class="fortune-card-label">今日方位</div>
+        <div class="fortune-card-value" id="fortune-dir">—</div>
+        <div class="fortune-card-sub" id="fortune-dir-sub">行動有利方向</div>
+      </div>
+    </div>
+    <div class="fortune-message reveal delay-1">
+      <div class="fortune-msg-label">今日提醒 · DAILY GUIDANCE</div>
+      <div class="fortune-msg-text" id="fortune-msg">載入中...</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
 <section id="services">
   <div class="container">
     <div class="services-header reveal">
       <p class="section-label">我們提供什麼</p>
-      <h2 class="section-title">三種方式，<br>讓宇宙接住你</h2>
+      <h2 class="section-title">三種方式，讓宇宙接住你</h2>
       <div class="divider center"></div>
     </div>
-
     <div class="services-grid">
       <div class="service-card reveal delay-1">
         <span class="service-emoji">🥚</span>
         <div class="service-name">外星人祈願雞蛋糕</div>
         <p class="service-desc">用台灣最親切的街頭食物，包裹一個宇宙祝福。每一顆雞蛋糕，附送一張祈願卡，寫下你想問宇宙的事。</p>
-        <div class="service-when">
-          適合你：在老街漫步，想帶一點不一樣回家的你。
-        </div>
-        <div class="service-price">NT$100 · 含祈願卡</div>
+        <div class="service-when">適合你：在老街漫步，想帶一點不一樣回家的你。</div>
+        <div class="service-price">NT$110 · 含祈願卡</div>
       </div>
-
       <div class="service-card featured reveal delay-2">
         <div class="featured-tag">最受歡迎</div>
         <span class="service-emoji">🗡️</span>
         <div class="service-name">刀療體驗</div>
         <p class="service-desc">古老的身體療法，讓滯留的氣血動起來。3分鐘現場體驗免費，讓你的身體告訴你它在說什麼。</p>
-        <div class="service-when">
-          適合你：肩頸痠痛、睡不好、身體某處長期不對勁的你。
-        </div>
-        <div class="service-price">現場免費體驗 · 完整療程 NT$399起</div>
+        <div class="service-when">適合你：肩頸痠痛、睡不好、身體某處長期不對勁的你。</div>
+        <div class="service-price">現場免費體驗 · 完整療程 NT$950</div>
       </div>
-
       <div class="service-card reveal delay-3">
         <span class="service-emoji">☯️</span>
         <div class="service-name">易經 · 塔羅問答</div>
         <p class="service-desc">一個問題，一個方向。用幾千年的智慧，幫你照亮眼前的岔路。現場可做一題免費簡易問卦。</p>
-        <div class="service-when">
-          適合你：在感情、工作、人生方向感到迷茫，想聽聽老天怎麼說的你。
-        </div>
-        <div class="service-price">現場一題免費 · 完整諮詢 NT$599起</div>
+        <div class="service-when">適合你：在感情、工作、人生方向感到迷茫，想聽聽老天怎麼說的你。</div>
+        <div class="service-price">現場一題免費 · 完整諮詢 NT$950起</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── EXPERIENCE FLOW ──────────────────────────────────────── -->
+<!-- EXPERIENCE -->
 <section id="experience">
   <div class="container">
     <div class="exp-inner">
@@ -751,62 +380,24 @@ footer {
         <p class="section-label reveal">來這裡的體驗</p>
         <h2 class="section-title reveal">從一顆雞蛋糕<br>到找到答案</h2>
         <div class="divider reveal"></div>
-        <p class="section-sub reveal" style="margin-bottom: 2.5rem;">
-          每一次來鹿港老街找我，都不只是一次消費。<br>
-          是一次讓自己被接住的機會。
-        </p>
-
+        <p class="section-sub reveal" style="margin-bottom:2.5rem;">每一次來鹿港老街找我，都不只是一次消費。是一次讓自己被接住的機會。</p>
         <div class="exp-steps">
-          <div class="exp-step reveal">
-            <div class="exp-num">一</div>
-            <div>
-              <div class="exp-step-title">走進來，說說你的事</div>
-              <div class="exp-step-body">不需要預約，也不需要理由。路過就停下來，我問你一句「你今天來鹿港是為了什麼？」</div>
-            </div>
-          </div>
-          <div class="exp-step reveal delay-1">
-            <div class="exp-num">二</div>
-            <div>
-              <div class="exp-step-title">吃一顆雞蛋糕，寫下一個願望</div>
-              <div class="exp-step-body">拿一張祈願卡，把心裡那個說不清楚的問題寫上去。宇宙會收到。</div>
-            </div>
-          </div>
-          <div class="exp-step reveal delay-2">
-            <div class="exp-num">三</div>
-            <div>
-              <div class="exp-step-title">3分鐘刀療，讓身體說話</div>
-              <div class="exp-step-body">我用刀幫你疏通肩頸，感受一下那個你忽略很久的地方。</div>
-            </div>
-          </div>
-          <div class="exp-step reveal delay-3">
-            <div class="exp-num">四</div>
-            <div>
-              <div class="exp-step-title">帶著答案回家，或繼續深聊</div>
-              <div class="exp-step-body">如果你還有問題，加我LINE。我記得你的狀況，下次能更精準地幫你。</div>
-            </div>
-          </div>
+          <div class="exp-step reveal"><div class="exp-num">一</div><div><div class="exp-step-title">走進來，說說你的事</div><div class="exp-step-body">不需要預約，也不需要理由。路過就停下來，我問你「你今天來鹿港是為了什麼？」</div></div></div>
+          <div class="exp-step reveal delay-1"><div class="exp-num">二</div><div><div class="exp-step-title">吃一顆雞蛋糕，寫下一個願望</div><div class="exp-step-body">拿一張祈願卡，把心裡那個說不清楚的問題寫上去。宇宙會收到。</div></div></div>
+          <div class="exp-step reveal delay-2"><div class="exp-num">三</div><div><div class="exp-step-title">3分鐘刀療，讓身體說話</div><div class="exp-step-body">我用刀幫你疏通肩頸，感受一下那個你忽略很久的地方。</div></div></div>
+          <div class="exp-step reveal delay-3"><div class="exp-num">四</div><div><div class="exp-step-title">帶著答案回家，或繼續深聊</div><div class="exp-step-body">如果你還有問題，加我LINE。我記得你的狀況，下次能更精準地幫你。</div></div></div>
         </div>
       </div>
-
       <div class="exp-visual">
-        <div class="exp-quote-card reveal">
-          <p class="exp-quote-text">「我只是路過，結果在老街遇到他，做了3分鐘刀療，肩膀瞬間輕了一半。問了一個困擾我半年的問題，他給我的答案讓我回家哭了一場，但哭完就想通了。」</p>
-          <p class="exp-quote-from">— 台中 Rita，30歲，上班族</p>
-        </div>
-        <div class="exp-quote-card reveal delay-1">
-          <p class="exp-quote-text">「帶孩子來鹿港玩，順手讓他許了一個願望。他說他希望考試考好、媽媽不要生病。我差點哭出來。那一張小小的祈願卡，讓我和兒子都有了一個難忘的時刻。」</p>
-          <p class="exp-quote-from">— 彰化 阿娟，42歲，全職媽媽</p>
-        </div>
-        <div class="exp-quote-card reveal delay-2">
-          <p class="exp-quote-text">「本來只是來吃小吃，結果被攤位的字吸引，做了一個易經問答。沒想到一個問題，讓我看清楚自己在糾結什麼。太神奇了。」</p>
-          <p class="exp-quote-from">— Google 評論 ★★★★★</p>
-        </div>
+        <div class="exp-quote-card reveal"><p class="exp-quote-text">「我只是路過，結果在老街遇到他，做了3分鐘刀療，肩膀瞬間輕了一半。問了一個困擾我半年的問題，他給我的答案讓我回家哭了一場，但哭完就想通了。」</p><p class="exp-quote-from">— 台中 Rita，30歲，上班族</p></div>
+        <div class="exp-quote-card reveal delay-1"><p class="exp-quote-text">「帶孩子來鹿港玩，讓他許了一個願望。他說他希望考試考好、媽媽不要生病。那一張小小的祈願卡，讓我和兒子都有了一個難忘的時刻。」</p><p class="exp-quote-from">— 彰化 阿娟，42歲，全職媽媽</p></div>
+        <div class="exp-quote-card reveal delay-2"><p class="exp-quote-text">「本來只是來吃小吃，被攤位的字吸引，做了一個易經問答。一個問題，讓我看清楚自己在糾結什麼。太神奇了。」</p><p class="exp-quote-from">— Google 評論 ★★★★★</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── STORY ────────────────────────────────────────────────── -->
+<!-- STORY -->
 <section id="story">
   <div class="container">
     <div class="story-inner">
@@ -814,173 +405,169 @@ footer {
         <p class="section-label reveal">我們的故事</p>
         <h2 class="section-title reveal">從鹿港老街<br>到宇宙的頻率</h2>
         <div class="divider reveal"></div>
-
         <div class="reveal">
           <p>我在<strong>鹿港天后宮</strong>旁長大，從小看著媽祖守護這塊土地。後來學了刀療和易經，我開始明白，身體的痠痛和心裡的困惑，其實是同一件事——都是你忽略自己太久了。</p>
-          <p>後來去了<strong>埔里地母廟</strong>，感受到大地之母的力量，才理解什麼叫「被接住」。有一年去了英國的<strong>巨石陣</strong>，在那裡我知道，宇宙的能量場不分國界，而台灣老街的廟口，和五千年前的石陣，其實是同一個頻率。</p>
+          <p>後來去了<strong>埔里地母廟</strong>，感受到大地之母的力量，才理解什麼叫「被接住」。有一年去了英國的<strong>巨石陣</strong>，在那裡我知道，宇宙的能量場不分國界，而台灣老街的廟口和五千年前的石陣，其實是同一個頻率。</p>
           <div class="story-pull">「在媽祖的老街口，用一把刀和一張卦，把宇宙的力量帶給每一個走進來的人。」</div>
           <p>所以我在鹿港老街擺了這個攤位。不只是賣雞蛋糕，是把這三個地方給我的力量，帶給每一個需要的人。</p>
         </div>
       </div>
-
       <div>
         <p class="section-label reveal">能量地脈</p>
-        <h3 class="section-title reveal" style="font-size:1.5rem;">三地串接，<br>一條宇宙軸線</h3>
+        <h3 class="section-title reveal" style="font-size:1.5rem;">三地串接，一條宇宙軸線</h3>
         <div class="divider reveal"></div>
-
         <div class="geo-chain reveal">
-          <div class="geo-node">
-            <div class="geo-dot-wrap">
-              <div class="geo-dot">🏮</div>
-              <div class="geo-line"></div>
-            </div>
-            <div class="geo-info">
-              <div class="geo-name">鹿港天后宮</div>
-              <div class="geo-desc">媽祖守護之地。在老街口的攤位，每一個來的人都在她的護佑之下。這裡是起點，也是我的根。</div>
-            </div>
-          </div>
-          <div class="geo-node">
-            <div class="geo-dot-wrap">
-              <div class="geo-dot">🌍</div>
-              <div class="geo-line"></div>
-            </div>
-            <div class="geo-info">
-              <div class="geo-name">埔里地母廟</div>
-              <div class="geo-desc">大地之母的能量場，教會我什麼是真正的「接住」。身體和心靈的療癒，都從這裡的力量汲取。</div>
-            </div>
-          </div>
-          <div class="geo-node">
-            <div class="geo-dot-wrap">
-              <div class="geo-dot">🗿</div>
-            </div>
-            <div class="geo-info">
-              <div class="geo-name">英國巨石陣</div>
-              <div class="geo-desc">五千年前的宇宙能量場，跨越時空的頻率。讓我明白台灣廟口與宇宙能量場其實從不分離。</div>
-            </div>
-          </div>
+          <div class="geo-node"><div class="geo-dot-wrap"><div class="geo-dot">🏮</div><div class="geo-line"></div></div><div><div class="geo-name">鹿港天后宮</div><div class="geo-desc">媽祖守護之地。在老街口的攤位，每一個來的人都在她的護佑之下。這裡是起點，也是我的根。</div></div></div>
+          <div class="geo-node"><div class="geo-dot-wrap"><div class="geo-dot">🌍</div><div class="geo-line"></div></div><div><div class="geo-name">埔里地母廟</div><div class="geo-desc">大地之母的能量場，教會我什麼是真正的「接住」。身體和心靈的療癒，都從這裡的力量汲取。</div></div></div>
+          <div class="geo-node"><div class="geo-dot-wrap"><div class="geo-dot">🗿</div></div><div><div class="geo-name">英國巨石陣</div><div class="geo-desc">五千年前的宇宙能量場，跨越時空的頻率。讓我明白台灣廟口與宇宙能量場從不分離。</div></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── TESTIMONIALS ────────────────────────────────────────── -->
+<!-- TESTIMONIALS -->
 <section id="testimonials">
   <div class="container">
     <div class="testi-header">
       <p class="section-label reveal">真實的聲音</p>
       <h2 class="section-title reveal">他們說</h2>
       <div class="divider center reveal"></div>
-      <p class="section-sub reveal" style="margin: 0 auto;">
-        每一個走進來的故事，都是真的。<br>
-        把你的感受傳給我，讓下一個需要的人看見。
-      </p>
     </div>
-
     <div class="testi-grid">
-      <div class="testi-card reveal delay-1">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「之前一直肩頸痠痛，做了完整刀療之後，睡眠品質明顯改善。更神奇的是，他問我的那個易經問題，讓我重新思考了我和工作的關係。」</p>
-        <div class="testi-from">
-          <div class="testi-avatar">M</div>
-          <span>Mina，台北，35歲</span>
-        </div>
-      </div>
-      <div class="testi-card reveal delay-2">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「帶孩子來鹿港，本來只是路過，被攤位的牌子停下來。3分鐘刀療讓我當場感受到身體的不同，孩子也愛上了祈願卡的儀式感。下週要帶朋友來！」</p>
-        <div class="testi-from">
-          <div class="testi-avatar">陳</div>
-          <span>陳太太，彰化，40歲</span>
-        </div>
-      </div>
-      <div class="testi-card reveal delay-3">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「我是不信鬼神的人，但他的易經解說非常理性，幫我用另一個角度看問題。刀療更是實實在在的身體改善。完全不是我想像中的那種算命。強烈推薦。」</p>
-        <div class="testi-from">
-          <div class="testi-avatar">K</div>
-          <span>Ken，台中，28歲，工程師</span>
-        </div>
-      </div>
+      <div class="testi-card reveal delay-1"><div class="testi-stars">★★★★★</div><p class="testi-text">「之前一直肩頸痠痛，做了完整刀療之後，睡眠品質明顯改善。更神奇的是，他問我的那個易經問題，讓我重新思考了我和工作的關係。」</p><div class="testi-from"><div class="testi-avatar">M</div><span>Mina，台北，35歲</span></div></div>
+      <div class="testi-card reveal delay-2"><div class="testi-stars">★★★★★</div><p class="testi-text">「帶孩子來鹿港，本來只是路過，被攤位的牌子停下來。3分鐘刀療讓我當場感受到身體的不同，孩子也愛上了祈願卡的儀式感。下週要帶朋友來！」</p><div class="testi-from"><div class="testi-avatar">陳</div><span>陳太太，彰化，40歲</span></div></div>
+      <div class="testi-card reveal delay-3"><div class="testi-stars">★★★★★</div><p class="testi-text">「我是不信鬼神的人，但他的易經解說非常理性，幫我用另一個角度看問題。刀療更是實實在在的身體改善。完全不是我想像中的那種算命。強烈推薦。」</p><div class="testi-from"><div class="testi-avatar">K</div><span>Ken，台中，28歲，工程師</span></div></div>
     </div>
-
-    <div style="text-align:center; margin-top:2rem;">
-      <!-- 替換為你的 Google 評論頁連結 -->
-      <a href="https://g.page/r/你的Google商家ID/review" class="btn-outline" target="_blank" style="display:inline-flex;">
-        在 Google 留下你的評論 ↗
-      </a>
+    <div style="text-align:center;margin-top:2rem;">
+      <a href="https://g.page/r/你的Google商家ID/review" class="btn-outline" target="_blank" style="display:inline-flex;">在 Google 留下你的評論 ↗</a>
     </div>
   </div>
 </section>
 
-<!-- ── PRICING ──────────────────────────────────────────────── -->
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-inner">
+      <div>
+        <p class="section-label reveal">預約老師時間</p>
+        <h2 class="section-title reveal">選擇你的<br>諮詢時段</h2>
+        <div class="divider reveal"></div>
+        <div class="reveal">
+          <p>選擇日期和時段，系統會自動帶入資訊到 LINE，老師確認後即完成預約。</p>
+          <p>線上諮詢（易經 / 塔羅）可視訊進行，不限地區。刀療需到現場。</p>
+          <p style="font-size:13px;color:var(--text-3);">預約完成後請完成付款，老師會在 24 小時內透過 LINE 確認時段。</p>
+        </div>
+        <div class="booking-legend reveal delay-1">
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(42,173,160,0.7);"></div><span>有空位</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(201,72,56,0.6);"></div><span>已額滿</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:rgba(212,160,32,0.8);"></div><span>今天</span></div>
+        </div>
+      </div>
+
+      <div class="booking-panel reveal delay-1">
+        <div class="cal-header">
+          <button class="cal-nav-btn" id="cal-prev">‹ 上月</button>
+          <div class="cal-month-title" id="cal-title"></div>
+          <button class="cal-nav-btn" id="cal-next">下月 ›</button>
+        </div>
+        <div class="cal-weekdays">
+          <div class="cal-wd">日</div><div class="cal-wd">一</div><div class="cal-wd">二</div>
+          <div class="cal-wd">三</div><div class="cal-wd">四</div><div class="cal-wd">五</div><div class="cal-wd">六</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+
+        <div class="time-panel" id="time-panel">
+          <div class="time-panel-title" id="time-panel-title">選擇時段</div>
+          <div class="time-slots" id="time-slots"></div>
+        </div>
+
+        <div class="booking-confirm" id="booking-confirm">
+          <div class="booking-confirm-info" id="booking-confirm-info"></div>
+          <button class="booking-confirm-btn" id="booking-confirm-btn">透過 LINE 完成預約 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
 <section id="pricing">
   <div class="container">
     <div class="pricing-header">
-      <p class="section-label reveal">服務方案</p>
+      <p class="section-label reveal">服務方案與費用</p>
       <h2 class="section-title reveal">選擇你需要的深度</h2>
       <div class="divider center reveal"></div>
-      <p class="section-sub reveal" style="margin: 0 auto;">
-        現場攤位的3分鐘體驗完全免費。<br>
-        如果你想更深入，我們有以下方案。
-      </p>
+      <p class="section-sub reveal" style="margin:0 auto;">現場攤位的3分鐘刀療體驗完全免費。如果你想更深入，以下方案直接刷卡付款。</p>
     </div>
-
     <div class="pricing-grid">
       <div class="pricing-card reveal delay-1">
-        <div class="pricing-name">刀療體驗</div>
-        <p class="pricing-tagline">讓身體說話，讓痠痛找到出口。</p>
-        <div class="pricing-amount"><span class="pricing-currency">NT$</span>399</div>
-        <div class="pricing-duration">60分鐘完整療程 · 需提前預約</div>
+        <span class="pricing-emoji">🃏</span>
+        <div class="pricing-name">祈願卡</div>
+        <p class="pricing-tagline">把心願交給宇宙，讓意念成為力量。</p>
+        <div class="pricing-amount"><span class="pricing-currency">NT$</span>110</div>
+        <div class="pricing-duration">一張祈願卡 · 現場購買</div>
         <div class="pricing-features">
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>全身刀療疏通（60分鐘）</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>療前身體狀況評估</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>療後調理建議</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>附祈願卡一張</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>外星人祈願雞蛋糕一顆</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>特製祈願卡一張</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>現場送出宇宙儀式</span></div>
         </div>
-        <!-- 替換 href 為綠界收款連結或 LINE 預約連結 -->
-        <a href="https://line.me/R/ti/p/@964zvzfe" class="pricing-cta" target="_blank">LINE 預約此方案</a>
+        <a href="https://a.ecpay.tw/dBJ61" class="pricing-cta" target="_blank">立即購買</a>
+      </div>
+
+      <div class="pricing-card reveal delay-2">
+        <span class="pricing-emoji">☯️</span>
+        <div class="pricing-name">易經諮詢</div>
+        <p class="pricing-tagline">讓幾千年的智慧照亮你的選擇。</p>
+        <div class="pricing-amount"><span class="pricing-currency">NT$</span>950</div>
+        <div class="pricing-duration">45分鐘 · 線上或現場均可</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>深度易經問卦分析</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>書面解卦記錄（LINE傳送）</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>可線上進行，不限地區</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>7天內一次追蹤問答</span></div>
+        </div>
+        <a href="https://a.ecpay.tw/dBJ61" class="pricing-cta" target="_blank">立即預約付款</a>
       </div>
 
       <div class="pricing-card best reveal delay-2">
         <div class="best-badge">最多人選</div>
-        <div class="pricing-name">刀療 × 易經諮詢</div>
-        <p class="pricing-tagline">身體和心靈同時被照顧到。</p>
-        <div class="pricing-amount"><span class="pricing-currency">NT$</span>999</div>
-        <div class="pricing-duration">刀療60分＋易經45分 · 共約2小時</div>
+        <span class="pricing-emoji">🔮</span>
+        <div class="pricing-name">塔羅諮詢</div>
+        <p class="pricing-tagline">讓牌說出你心裡那個說不出口的答案。</p>
+        <div class="pricing-amount"><span class="pricing-currency">NT$</span>950</div>
+        <div class="pricing-duration">45分鐘 · 線上或現場均可</div>
         <div class="pricing-features">
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>完整刀療療程（60分鐘）</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>易經深度諮詢（45分鐘）</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>專屬療癒記錄單</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>附祈願卡三張</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>LINE 後續追蹤（7天內）</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>全牌陣深度解讀</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>拍照記錄牌陣結果</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>可線上進行，不限地區</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>7天內一次追蹤問答</span></div>
         </div>
-        <!-- 替換 href 為綠界收款連結 -->
-        <a href="https://line.me/R/ti/p/@964zvzfe" class="pricing-cta" target="_blank">LINE 預約此方案</a>
+        <a href="https://a.ecpay.tw/dBJ61" class="pricing-cta" target="_blank">立即預約付款</a>
       </div>
 
       <div class="pricing-card reveal delay-3">
-        <div class="pricing-name">易經塔羅諮詢</div>
-        <p class="pricing-tagline">讓老祖宗的智慧照亮你的選擇。</p>
-        <div class="pricing-amount"><span class="pricing-currency">NT$</span>599</div>
-        <div class="pricing-duration">45分鐘 · 線上或現場均可</div>
+        <span class="pricing-emoji">🗡️</span>
+        <div class="pricing-name">刀療按摩</div>
+        <p class="pricing-tagline">讓身體說話，讓積累已久的痠痛找到出口。</p>
+        <div class="pricing-amount"><span class="pricing-currency">NT$</span>950</div>
+        <div class="pricing-duration">60分鐘 · 需現場進行</div>
         <div class="pricing-features">
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>深度易經問卦分析</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>塔羅牌輔助解讀</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>書面解卦記錄（LINE傳送）</span></div>
-          <div class="pricing-feature"><span class="pricing-check">✓</span><span>可線上進行，不限地區</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>全身刀療疏通（60分鐘）</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>療前身體狀況評估</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>療後調理建議說明</span></div>
+          <div class="pricing-feature"><span class="pricing-check">✓</span><span>附祈願卡一張</span></div>
         </div>
-        <a href="https://line.me/R/ti/p/@964zvzfe" class="pricing-cta" target="_blank">LINE 預約此方案</a>
+        <a href="https://a.ecpay.tw/dBJ61" class="pricing-cta" target="_blank">立即預約付款</a>
       </div>
     </div>
-
-    <div style="text-align:center; margin-top:2rem; font-size:13px; color:var(--text-3);">
-      LINE好友享首次預約9折 · 帶朋友來刀療，你下次免費30分鐘
+    <div style="text-align:center;margin-top:1.5rem;font-size:13px;color:var(--text-3);">
+      LINE好友享首次預約9折 · 帶朋友來，你下次免費30分鐘
     </div>
   </div>
 </section>
 
-<!-- ── LOCATION ─────────────────────────────────────────────── -->
+<!-- LOCATION -->
 <section id="location">
   <div class="container">
     <div class="location-inner">
@@ -988,139 +575,227 @@ footer {
         <p class="section-label reveal">找到我們</p>
         <h2 class="section-title reveal">每個週末<br>在鹿港等你</h2>
         <div class="divider reveal"></div>
-
         <div class="location-info-list">
-          <div class="location-info-row reveal">
-            <div class="location-info-icon">📍</div>
-            <div>
-              <div class="location-info-label">地點</div>
-              <div class="location-info-val">彰化縣鹿港鎮鹿港老街<br>（天后宮附近，詳細位置加LINE確認）</div>
-            </div>
-          </div>
-          <div class="location-info-row reveal delay-1">
-            <div class="location-info-icon">🕙</div>
-            <div>
-              <div class="location-info-label">擺攤時間</div>
-              <div class="location-info-val">週六、週日 10:00 – 17:00<br><span style="font-size:12px; color:var(--text-3);">雨天或特殊節日依實際情況，加LINE確認</span></div>
-            </div>
-          </div>
-          <div class="location-info-row reveal delay-2">
-            <div class="location-info-icon">💬</div>
-            <div>
-              <div class="location-info-label">聯絡方式</div>
-              <div class="location-info-val">LINE 官方帳號（最快回覆）<br>IG / TikTok：@外星人祈願雞蛋糕</div>
-            </div>
-          </div>
-          <div class="location-info-row reveal delay-3">
-            <div class="location-info-icon">🚗</div>
-            <div>
-              <div class="location-info-label">交通</div>
-              <div class="location-info-val">鹿港彰化客運或自行開車<br>鹿港老街周邊有收費停車場</div>
-            </div>
-          </div>
+          <div class="location-info-row reveal"><div class="location-info-icon">📍</div><div><div class="location-info-label">地點</div><div class="location-info-val">彰化縣鹿港鎮鹿港老街<br>（天后宮附近，詳細位置加LINE確認）</div></div></div>
+          <div class="location-info-row reveal delay-1"><div class="location-info-icon">🕙</div><div><div class="location-info-label">擺攤時間</div><div class="location-info-val">週六、週日 10:00 – 17:00<br><span style="font-size:12px;color:var(--text-3);">雨天或特殊節日依實際情況，加LINE確認</span></div></div></div>
+          <div class="location-info-row reveal delay-2"><div class="location-info-icon">💬</div><div><div class="location-info-label">聯絡方式</div><div class="location-info-val">LINE 官方帳號（最快回覆）<br>IG / TikTok：@外星人祈願雞蛋糕</div></div></div>
+          <div class="location-info-row reveal delay-3"><div class="location-info-icon">🚗</div><div><div class="location-info-label">交通</div><div class="location-info-val">鹿港彰化客運或自行開車<br>鹿港老街周邊有收費停車場</div></div></div>
         </div>
       </div>
-
       <div class="reveal delay-2">
-        <!-- 把下面的 div 換成 Google Maps 嵌入 iframe -->
-        <!-- 步驟：Google Maps 搜尋你的位置 → 點「分享」→「嵌入地圖」→ 複製 iframe 貼在這裡 -->
-        <div class="map-placeholder">
-          <!-- 範例（替換 src 的座標為你的實際位置）：
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d你的座標!..."
-            allowfullscreen="" loading="lazy">
-          </iframe>
-          -->
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <circle cx="24" cy="22" r="10" stroke="rgba(212,160,32,0.4)" stroke-width="1.5"/>
-            <circle cx="24" cy="22" r="3" fill="rgba(212,160,32,0.4)"/>
-            <path d="M24 32C24 32 14 44 24 44C34 44 24 32 24 32Z" fill="rgba(212,160,32,0.2)"/>
-          </svg>
-          <span>此處貼入 Google Maps 嵌入 iframe</span>
-          <span style="font-size:11px; max-width:200px; text-align:center; line-height:1.6;">Google Maps → 搜尋位置 → 分享 → 嵌入地圖 → 複製代碼</span>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3637.6496822392065!2d120.42985807603858!3d24.053096778369506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f0a5d68af8cfd%3A0x5b1438e2a6a27cfe!2z6piO5riv5aSp5ZOU5a656Jyo!5e0!3m2!1szh-TW!2stw!4v1744000000000!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FINAL CTA ────────────────────────────────────────────── -->
+<!-- CTA -->
 <section id="cta">
   <div class="cta-glow"></div>
-  <div style="position:relative; z-index:1;">
+  <div style="position:relative;z-index:1;">
     <p class="cta-pre reveal">現在就開始</p>
-    <h2 class="cta-title reveal">
-      你一直在等的，<br>
-      是<em>被接住</em>的感覺。
-    </h2>
-    <p class="cta-sub reveal">
-      加入LINE，我們從一個問題開始。<br>
-      不管是身體的，還是心裡的。
-    </p>
+    <h2 class="cta-title reveal">你一直在等的，<br>是<em>被接住</em>的感覺。</h2>
+    <p class="cta-sub reveal">加入LINE，我們從一個問題開始。<br>不管是身體的，還是心裡的。</p>
     <div class="reveal">
-      <!-- 替換 href 為你的 LINE 加好友連結 -->
-      <a href="https://line.me/R/ti/p/@964zvzfe" class="btn-primary" style="font-size:16px; padding:16px 36px;" target="_blank">
-        加 LINE 好友，開始你的體驗
-      </a>
+      <a href="https://line.me/R/ti/p/@你的LINE_ID" class="btn-primary" style="font-size:16px;padding:16px 36px;" target="_blank">加 LINE 好友，開始你的體驗</a>
     </div>
     <p class="cta-note reveal">加好友後立即收到「身體警訊對照表」+ 首次預約9折優惠碼</p>
   </div>
 </section>
 
-<!-- ── FOOTER ───────────────────────────────────────────────── -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">外星人祈願雞蛋糕</div>
     <div class="footer-links">
-      <a href="https://instagram.com/alien_egg_cake" target="_blank">Instagram</a>
-      <a href="https://tiktok.com/@mrmarket168" target="_blank">TikTok</a>
-      <a href="https://line.me/R/ti/p/@964zvzfe" target="_blank">LINE</a>
+      <a href="https://instagram.com/你的IG帳號" target="_blank">Instagram</a>
+      <a href="https://tiktok.com/@你的TikTok帳號" target="_blank">TikTok</a>
+      <a href="https://line.me/R/ti/p/@你的LINE_ID" target="_blank">LINE</a>
     </div>
     <div class="footer-copy">© 外星人祈願雞蛋糕 · 鹿港老街</div>
   </div>
 </footer>
 
-<!-- ── JS: STARS + SCROLL ───────────────────────────────────── -->
 <script>
-(function () {
-  // Generate starfield
-  var container = document.getElementById('stars');
-  var count = 120;
-  for (var i = 0; i < count; i++) {
-    var s = document.createElement('div');
-    s.className = 'star';
-    var size = Math.random() * 2.2 + 0.6;
-    s.style.cssText = [
-      'width:' + size + 'px',
-      'height:' + size + 'px',
-      'left:' + (Math.random() * 100) + '%',
-      'top:' + (Math.random() * 100) + '%',
-      '--dur:' + (Math.random() * 5 + 3) + 's',
-      '--delay:' + (Math.random() * 6) + 's',
-      '--op:' + (Math.random() * 0.5 + 0.2)
-    ].join(';');
-    container.appendChild(s);
-  }
+(function(){
+/* ── STARS ── */
+var sc=document.getElementById('stars');
+for(var i=0;i<120;i++){var s=document.createElement('div');s.className='star';var sz=Math.random()*2.2+0.6;s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+(Math.random()*100)+'%;top:'+(Math.random()*100)+'%;--dur:'+(Math.random()*5+3)+'s;--delay:'+(Math.random()*6)+'s;--op:'+(Math.random()*0.5+0.2);sc.appendChild(s);}
 
-  // Intersection Observer for reveal animations
-  var reveals = document.querySelectorAll('.reveal');
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+/* ── REVEAL ── */
+var revEls=document.querySelectorAll('.reveal');
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+revEls.forEach(function(el){obs.observe(el);});
+document.querySelectorAll('#hero .reveal').forEach(function(el){el.classList.add('visible');});
+
+/* ── FORTUNE ENGINE ── */
+var COLORS=[
+  {name:'珊瑚紅',hex:'#E8705E',sub:'熱情與行動力'},
+  {name:'深靛藍',hex:'#3A5B8C',sub:'沉穩與直覺力'},
+  {name:'翡翠綠',hex:'#2A8C6E',sub:'生機與療癒力'},
+  {name:'暖金黃',hex:'#D4A020',sub:'豐盛與自信心'},
+  {name:'茉莉白',hex:'#F0E8D4',sub:'純淨與新開始'},
+  {name:'霧紫羅蘭',hex:'#7B68C8',sub:'靈感與創造力'},
+  {name:'陶土棕',hex:'#A0674A',sub:'穩固與踏實感'},
+  {name:'天空藍',hex:'#5BA8D4',sub:'自由與清明思維'},
+];
+var GEMS=[
+  {name:'白水晶',sub:'淨化能量，放大意念'},
+  {name:'黑碧璽',sub:'防護負能量入侵'},
+  {name:'粉晶',sub:'招引緣份與愛'},
+  {name:'紫水晶',sub:'提升直覺與智慧'},
+  {name:'虎眼石',sub:'強化意志與決心'},
+  {name:'月光石',sub:'平衡情緒與直覺'},
+  {name:'青金石',sub:'開啟第三眼，增強洞察'},
+  {name:'綠幽靈',sub:'財運與事業提升'},
+];
+var DIRS=['東方','南方','西方','北方','東南','東北','西南','西北'];
+var DIR_SUBS=['迎向晨光，行動有成','火氣旺盛，熱情出擊','穩定收成，休養生息','靜心內觀，深度思考','順風而行，貴人自來','破舊立新，轉機已至','大地之力，腳踏實地','智慧深流，謀定後動'];
+var MSGS=[
+  '今日宜靜不宜躁。當你放慢腳步，會發現一直忽略的答案其實就在眼前。不要追，讓它來。',
+  '今天是行動的好日子。你心裡已經知道答案了，只是還在等一個確認。這就是那個確認。',
+  '今日有貴人出現在意想不到的地方。保持開放，那個讓你不舒服的對話，可能正是你需要的。',
+  '你的身體正在跟你說話。今天特別注意腸胃和肩頸，那裡存著你沒說出口的情緒。',
+  '今日適合整理，無論是空間、關係還是思緒。清出去的，會有更好的來填滿。',
+  '有件事你一直拖著沒做。今天是開始的好時機，不需要完美，只需要開始。',
+  '今天要對自己好一點。你給別人的那份溫柔，今天也給自己。休息不是放棄，是補給。',
+  '直覺很強的一天。那個第一眼的感覺、第一個跳出來的答案，往往是最準的。相信它。',
+];
+
+function seededRand(seed,mod){
+  var x=Math.sin(seed+1)*10000;
+  return Math.floor((x-Math.floor(x))*mod);
+}
+function getTodayFortune(){
+  var now=new Date();
+  var seed=now.getFullYear()*10000+( now.getMonth()+1)*100+now.getDate();
+  var c=COLORS[seededRand(seed,COLORS.length)];
+  var g=GEMS[seededRand(seed+7,GEMS.length)];
+  var num=(seededRand(seed+13,9)+1);
+  var di=seededRand(seed+19,DIRS.length);
+  var msg=MSGS[seededRand(seed+31,MSGS.length)];
+  return{color:c,gem:g,num:num,dir:DIRS[di],dirSub:DIR_SUBS[di],msg:msg};
+}
+var f=getTodayFortune();
+var now=new Date();
+var months=['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+var days=['日','一','二','三','四','五','六'];
+document.getElementById('fortune-date-label').textContent=now.getFullYear()+'年'+months[now.getMonth()]+now.getDate()+'日 · 星期'+days[now.getDay()]+' · 今日運勢';
+var sw=document.getElementById('fortune-color-swatch');
+sw.style.background=f.color.hex;
+document.getElementById('fortune-color').textContent=f.color.name;
+document.getElementById('fortune-color-sub').textContent=f.color.sub;
+document.getElementById('fortune-gem').textContent=f.gem.name;
+document.getElementById('fortune-gem-sub').textContent=f.gem.sub;
+document.getElementById('fortune-num').textContent=f.num;
+document.getElementById('fortune-num-sub').textContent='今日幸運能量數';
+document.getElementById('fortune-dir').textContent=f.dir;
+document.getElementById('fortune-dir-sub').textContent=f.dirSub;
+document.getElementById('fortune-msg').textContent=f.msg;
+
+/* ── BOOKING CALENDAR ── */
+// 老師有空的日期設定（格式：'YYYY-MM-DD': ['時段1','時段2',...]，已滿用 'FULL'）
+// ↓ 在這裡修改老師每月有空的日期和時段 ↓
+var AVAILABLE = {
+  '2026-04-12': ['10:00','13:00','15:00'],
+  '2026-04-13': ['10:00','14:00'],
+  '2026-04-18': ['10:00','11:30','14:00','15:30'],
+  '2026-04-19': ['10:00','13:00'],
+  '2026-04-20': ['FULL'],
+  '2026-04-25': ['10:00','13:00','15:00'],
+  '2026-04-26': ['10:00','14:00','16:00'],
+  '2026-05-03': ['10:00','13:00','15:00'],
+  '2026-05-04': ['10:00','14:00'],
+  '2026-05-10': ['10:00','13:00'],
+  '2026-05-11': ['10:00','11:30','14:00'],
+  '2026-05-17': ['10:00','15:00'],
+  '2026-05-18': ['FULL'],
+  '2026-05-24': ['10:00','13:00','15:00'],
+  '2026-05-25': ['10:00','14:00'],
+};
+
+var calYear=now.getFullYear();
+var calMonth=now.getMonth();
+var selectedDate=null;
+var selectedTime=null;
+
+function pad(n){return n<10?'0'+n:''+n;}
+function dateKey(y,m,d){return y+'-'+pad(m+1)+'-'+pad(d);}
+
+function renderCal(){
+  var title=document.getElementById('cal-title');
+  var grid=document.getElementById('cal-grid');
+  title.textContent=calYear+'年 '+(calMonth+1)+'月';
+  grid.innerHTML='';
+  var first=new Date(calYear,calMonth,1).getDay();
+  var daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  var todayKey=dateKey(now.getFullYear(),now.getMonth(),now.getDate());
+  for(var i=0;i<first;i++){var e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
+  for(var d=1;d<=daysInMonth;d++){
+    var el=document.createElement('div');
+    el.className='cal-day';
+    el.textContent=d;
+    var key=dateKey(calYear,calMonth,d);
+    if(key===todayKey) el.classList.add('today');
+    if(AVAILABLE[key]){
+      if(AVAILABLE[key][0]==='FULL'){
+        el.classList.add('full-slot');
+        el.title='此日已額滿';
+      } else {
+        el.classList.add('has-slot');
+        if(selectedDate===key) el.classList.add('selected');
+        (function(k,day){
+          el.addEventListener('click',function(){
+            selectedDate=k; selectedTime=null;
+            renderCal(); showTimeSlots(k,day);
+          });
+        })(key,d);
       }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(function (el) { observer.observe(el); });
+    }
+    grid.appendChild(el);
+  }
+}
 
-  // Hero elements are always visible
-  document.querySelectorAll('#hero .reveal').forEach(function(el) {
-    el.classList.add('visible');
+function showTimeSlots(key, day){
+  var panel=document.getElementById('time-panel');
+  var title=document.getElementById('time-panel-title');
+  var slotsEl=document.getElementById('time-slots');
+  var confirm=document.getElementById('booking-confirm');
+  panel.classList.add('visible');
+  confirm.classList.remove('visible');
+  title.textContent=(calMonth+1)+'月'+day+'日 · 請選擇時段';
+  slotsEl.innerHTML='';
+  var slots=AVAILABLE[key];
+  slots.forEach(function(t){
+    var btn=document.createElement('button');
+    btn.className='time-slot';
+    btn.textContent=t;
+    btn.addEventListener('click',function(){
+      selectedTime=t;
+      document.querySelectorAll('.time-slot').forEach(function(b){b.style.background='';b.style.borderColor='';b.style.color='';});
+      btn.style.background='var(--teal)';btn.style.borderColor='var(--teal)';btn.style.color='#fff';
+      showConfirm(key,day,t);
+    });
+    slotsEl.appendChild(btn);
   });
+}
+
+function showConfirm(key, day, time){
+  var confirm=document.getElementById('booking-confirm');
+  var info=document.getElementById('booking-confirm-info');
+  var btn=document.getElementById('booking-confirm-btn');
+  confirm.classList.add('visible');
+  info.innerHTML='<strong style="color:var(--text);">預約資訊</strong><br>日期：'+(calMonth+1)+'月'+day+'日（'+['日','一','二','三','四','五','六'][new Date(calYear,calMonth,day).getDay()]+'）<br>時段：'+time+'<br>服務：易經諮詢 / 塔羅 / 刀療（請在LINE說明）<br>費用：NT$950（付款後確認）';
+  var msg=encodeURIComponent('您好！我想預約 '+(calMonth+1)+'月'+day+'日 '+time+' 的諮詢，請問老師方便嗎？');
+  btn.onclick=function(){window.open('https://line.me/R/ti/p/@你的LINE_ID?text='+msg,'_blank');};
+}
+
+renderCal();
+document.getElementById('cal-prev').addEventListener('click',function(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}selectedDate=null;selectedTime=null;renderCal();document.getElementById('time-panel').classList.remove('visible');document.getElementById('booking-confirm').classList.remove('visible');});
+document.getElementById('cal-next').addEventListener('click',function(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}selectedDate=null;selectedTime=null;renderCal();document.getElementById('time-panel').classList.remove('visible');document.getElementById('booking-confirm').classList.remove('visible');});
+
 })();
 </script>
-
 </body>
 </html>
-
